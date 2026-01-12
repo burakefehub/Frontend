@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Upload</title>
+</head>
+<body>
+
+  <h2>Image Upload Test</h2>
+
+  <form id="uploadForm">
+    <input type="file" id="imageInput" accept="image/*">
+    <br><br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <p id="status"></p>
+
+<script>
+document.getElementById("uploadForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("imageInput");
+  const status = document.getElementById("status");
+
+  if (fileInput.files.length === 0) {
+    status.innerText = "Please select an image.";
+    return;
+  }
+
+  status.innerText = "Image selected (backend not connected yet)";
+});
+</script>
+
+</body>
+</html>

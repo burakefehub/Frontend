@@ -6,53 +6,49 @@
 </head>
 <body>
 
-  <h2>Image Upload Test</h2>
+<h2>Image Upload Test</h2>
 
-  <form id="uploadForm">
-    <input type="file" id="imageInput" accept="image/*">
-    <br><br>
-    <button type="submit">Upload</button>
-  </form>
+<form id="uploadForm">
+  <input type="file" id="imageInput" accept="image/*">
+  <br><br>
+  <button type="submit">Upload</button>
+</form>
 
-  <pre id="status"></pre>
+<p id="status"></p>
 
-  <!-- 👇 BURASI BACKEND’E BAĞLANAN KOD -->
-  <script>
-    document.getElementById("uploadForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+<script>
+const BACKEND_URL = "https://SENIN-RENDER-URL.onrender.com/upload";
 
-      const fileInput = document.getElementById("imageInput");
-      const status = document.getElementById("status");
+document.getElementById("uploadForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
 
-      if (fileInput.files.length === 0) {
-        status.innerText = "Please select an image.";
-        return;
-      }
+  const fileInput = document.getElementById("imageInput");
+  const status = document.getElementById("status");
 
-      const formData = new FormData();
-      formData.append("image", fileInput.files[0]);
+  if (fileInput.files.length === 0) {
+    status.innerText = "Please select an image.";
+    return;
+  }
 
-      status.innerText = "Uploading...";
+  const formData = new FormData();
+  formData.append("image", fileInput.files[0]);
 
-      try {
-        const response = await fetch(
-          "https://image-upload-backend.onrender.com/upload",
-          {
-            method: "POST",
-            body: formData
-          }
-        );
+  status.innerText = "Uploading...";
 
-        const data = await response.json();
-        status.innerText = JSON.stringify(data, null, 2);
+  const response = await fetch(BACKEND_URL, {
+    method: "POST",
+    body: formData
+  });
 
-      } catch (error) {
-        status.innerText = "Upload failed: " + error;
-      }
-    });
-  </script>
+  const data = await response.json();
+
+  status.innerText =
+    "Uploaded ✅ Width: " + data.width + " Height: " + data.height;
+});
+</script>
 
 </body>
 </html>
+
 
 
